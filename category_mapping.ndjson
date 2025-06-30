@@ -1,0 +1,80 @@
+{"original_category": "ABG", "standardized_category": "Blood Gas"}
+{"original_category": "PiCCO", "standardized_category": "PiCCO"}
+{"original_category": "CSF", "standardized_category": "CSF"}
+{"original_category": "VBG's", "standardized_category": "Venous Blood Gas"}
+{"original_category": "Routine Vital Signs", "standardized_category": "Routine Vital Signs"}
+{"original_category": "Skin - Assessment", "standardized_category": "Skin - Assessment"}
+{"original_category": "Urine", "standardized_category": "Urine"}
+{"original_category": "6-Cultures", "standardized_category": "6-Cultures"}
+{"original_category": "2-Ventilation", "standardized_category": "2-Ventilation"}
+{"original_category": "Antibiotics", "standardized_category": "Antibiotics"}
+{"original_category": "Impella", "standardized_category": "Impella"}
+{"original_category": "Venous ABG", "standardized_category": "Venous Blood Gas"}
+{"original_category": "Scores - APACHE II", "standardized_category": "Scores - APACHE II"}
+{"original_category": "Access Lines - Peripheral", "standardized_category": "Access Lines - Peripheral"}
+{"original_category": "Blood Gas", "standardized_category": "Blood Gas"}
+{"original_category": "Pulmonary", "standardized_category": "Pulmonary"}
+{"original_category": "HEMATOLOGY", "standardized_category": "Hematology"}
+{"original_category": "SPECIMEN", "standardized_category": "Specimen"}
+{"original_category": "IABP", "standardized_category": "IABP"}
+{"original_category": "Blood Products/Colloids", "standardized_category": "Blood Products/Colloids"}
+{"original_category": "Nutrition - Parenteral", "standardized_category": "Nutrition - Parenteral"}
+{"original_category": "Hematology", "standardized_category": "Hematology"}
+{"original_category": "Labs", "standardized_category": "Labs"}
+{"original_category": "Scores - APACHE IV", "standardized_category": "Scores - APACHE IV"}
+{"original_category": "Output", "standardized_category": "Output"}
+{"original_category": "NICOM", "standardized_category": "NICOM"}
+{"original_category": "OT Notes", "standardized_category": "OT Notes"}
+{"original_category": "VBG'S", "standardized_category": "Venous Blood Gas"}
+{"original_category": "Toxicology", "standardized_category": "Toxicology"}
+{"original_category": "ADT", "standardized_category": "ADT"}
+{"original_category": "Cardiovascular", "standardized_category": "Cardiovascular"}
+{"original_category": "Pain/Sedation", "standardized_category": "Pain/Sedation"}
+{"original_category": "Enzymes", "standardized_category": "Enzymes"}
+{"original_category": "Dialysis", "standardized_category": "Dialysis"}
+{"original_category": "Coags", "standardized_category": "Coags"}
+{"original_category": "ABG's", "standardized_category": "Blood Gas"}
+{"original_category": "Other ABGs", "standardized_category": "Other ABGs"}
+{"original_category": "1-Intubation/Extubation", "standardized_category": "1-Intubation/Extubation"}
+{"original_category": "OB-GYN", "standardized_category": "OB-GYN"}
+{"original_category": "Quick Admit", "standardized_category": "Quick Admit"}
+{"original_category": "Case Management", "standardized_category": "Case Management"}
+{"original_category": "Skin - Incisions", "standardized_category": "Skin - Incisions"}
+{"original_category": "Nutrition - Supplements", "standardized_category": "Nutrition - Supplements"}
+{"original_category": "Heme/Coag", "standardized_category": "Heme/Coag"}
+{"original_category": "7-Communication", "standardized_category": "7-Communication"}
+{"original_category": "Drains", "standardized_category": "Drains"}
+{"original_category": "Scores - APACHE IV (2)", "standardized_category": "Scores - APACHE IV (2)"}
+{"original_category": "Treatments", "standardized_category": "Treatments"}
+{"original_category": "Drug Level", "standardized_category": "Drug Level"}
+{"original_category": "Nutrition - Enteral", "standardized_category": "Nutrition - Enteral"}
+{"original_category": "Tandem Heart", "standardized_category": "Tandem Heart"}
+{"original_category": "Drug level", "standardized_category": "Drug Level"}
+{"original_category": "Alarms", "standardized_category": "Alarms"}
+{"original_category": "Chemistry", "standardized_category": "Chemistry"}
+{"original_category": "Respiratory", "standardized_category": "Respiratory"}
+{"original_category": "General", "standardized_category": "General"}
+{"original_category": "Hemodynamics", "standardized_category": "Hemodynamics"}
+{"original_category": "Medications", "standardized_category": "Medications"}
+{"original_category": "BLOOD GAS", "standardized_category": "Blood Gas"}
+{"original_category": "ABG\u2019S", "standardized_category": "Blood Gas"}
+{"original_category": "ANTIBACTERIUM", "standardized_category": "Antibcterium"}
+{"original_category": "5-Imaging", "standardized_category": "5-Imaging"}
+{"original_category": "Blood Gases", "standardized_category": "Blood Gas"}
+{"original_category": "Neurological", "standardized_category": "Neurological"}
+{"original_category": "Adm History/FHPA", "standardized_category": "Adm History/FHPA"}
+{"original_category": "Fluids/Intake", "standardized_category": "Fluids/Intake"}
+{"original_category": "ORGANISM", "standardized_category": "Orgnism"}
+{"original_category": "4-Procedures", "standardized_category": "4-Procedures"}
+{"original_category": "3-Significant Events", "standardized_category": "3-Significant Events"}
+{"original_category": "Free Form Intake", "standardized_category": "Free Form Intake"}
+{"original_category": "CHEMISTRY", "standardized_category": "Chemistry"}
+{"original_category": "Mixed Venous Gases", "standardized_category": "Venous Blood Gas"}
+{"original_category": null, "standardized_category": null}
+{"original_category": "Access Lines - Invasive", "standardized_category": "Access Lines - Invasive"}
+{"original_category": "Restraint/Support Systems", "standardized_category": "Restraint/Support Systems"}
+{"original_category": "Cardiovascular (Pacer Data)", "standardized_category": "Cardiovascular (Pacer Data)"}
+{"original_category": "Cardiovascular (Pulses)", "standardized_category": "Cardiovascular (Pulses)"}
+{"original_category": "Mixed VBGs", "standardized_category": "Venous Blood Gas"}
+{"original_category": "GI/GU", "standardized_category": "GI/GU"}
+{"original_category": "Skin - Impairment", "standardized_category": "Skin - Impairment"}
