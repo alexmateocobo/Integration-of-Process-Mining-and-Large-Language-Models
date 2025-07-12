@@ -1,10 +1,15 @@
-
-from bigquery_event_loader import BigQueryEventLogLoader
-from process_mining_pipeline import ProcessMiningPipeline
+import logging
+from bigquery_utils import BigQueryUtils
+from process_mining_utils import ProcessMiningUtils
+from langchain_utils import LangChainUtils
 
 if __name__ == "__main__":
+    
+    # Configure logging globally
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
     # Step 1: Authenticate and load data from BigQuery
-    loader = BigQueryEventLogLoader()
+    loader = BigQueryUtils()
     loader.authenticate()
 
     query = """
@@ -18,10 +23,23 @@ if __name__ == "__main__":
 
     df = loader.run_query(query)
 
-    # Step 2: Run the simplified inductive miner pipeline
-    pipeline = ProcessMiningPipeline(df)
+    # Step 2: Run the process mining pipeline
+    context_dir = "/Users/alejandromateocobo/Documents/PythonProjects/Integration_Of_LLMs_And_Process_Mining/data/context/"
+    pipeline = ProcessMiningUtils(df, output_dir=context_dir)
     pipeline.preprocess_dataframe()
     pipeline.discover_dfg()
-    pipeline.view_dfg()
+    # pipeline.view_dfg()
+    pipeline.abstract_dfg_to_text()
     pipeline.discover_petri_net()
-    pipeline.view_dfg()
+    # pipeline.view_petri_net()
+    pipeline.abstract_petri_net_to_text()
+
+    # Step 3: Embed textual summaries and run a LangChain query
+    lc_utils = LangChainUtils(context_dir=context_dir)
+    lc_utils.load_and_embed_documents()
+
+    query = "What is the most common workflow for patients in the ICU?"
+    answer = lc_utils.query_context(query)
+    
+    print("\n--- Answer from LLM ---\n")
+    print(answer)
