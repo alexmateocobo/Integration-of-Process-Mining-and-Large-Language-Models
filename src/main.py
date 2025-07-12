@@ -1,23 +1,27 @@
-from bigquery_loader import BigQueryEventLogLoader
+
+from bigquery_event_loader import BigQueryEventLogLoader
 from process_mining_pipeline import ProcessMiningPipeline
 
 if __name__ == "__main__":
+    # Step 1: Authenticate and load data from BigQuery
     loader = BigQueryEventLogLoader()
     loader.authenticate()
 
-    # Query MIMIC-III Clinical Dataset with admission filters
     query = """
         SELECT e.*
         FROM `integration-of-pm-and-llms.integration_of_pm_and_llms.filtered_eventlog` e
-        INNER JOIN `physionet-data.mimiciii_clinical.admissions` adm
-        ON e.subject_id = adm.subject_id AND e.hadm_id = adm.hadm_id
-        WHERE adm.admittime BETWEEN '2100-01-01' AND '2100-12-31'
-        AND adm.admission_type IN ('EMERGENCY', 'URGENT')
-        AND e.subject_id = 72091
+        INNER JOIN `physionet-data.mimiciii_clinical.icustays` icu
+        ON e.icustay_id = icu.icustay_id
+        WHERE e.icustay_id IN (211555, 290738, 236225, 213113)
+        AND e.linksto = 'datetimeevents'
     """
 
     df = loader.run_query(query)
 
-    process_miner = ProcessMiningPipeline(df)
-    process_miner.convert_to_event_log()
-    process_miner.discover_dfg()
+    # Step 2: Run the simplified inductive miner pipeline
+    pipeline = ProcessMiningPipeline(df)
+    pipeline.preprocess_dataframe()
+    pipeline.discover_dfg()
+    pipeline.view_dfg()
+    pipeline.discover_petri_net()
+    pipeline.view_dfg()

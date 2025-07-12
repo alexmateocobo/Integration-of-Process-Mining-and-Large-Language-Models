@@ -4,7 +4,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 class BigQueryEventLogLoader:
     def __init__(self):
-        # Configuration (can also be loaded from a config file if desired)
+        # Configuration
         self.project_id = "integration-of-pm-and-llms"
         self.client_secret_path = "/Users/alejandromateocobo/Documents/PythonProjects/Integration_Of_LLMs_And_Process_Mining/keys/client_secret_316641064865-57id3o26obibotvs226jeevisjdujha5.apps.googleusercontent.com.json"
         self.client = None
