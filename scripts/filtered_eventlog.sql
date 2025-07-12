@@ -93,81 +93,7 @@ procedureevents_prepared AS (
         pe.itemid = di.itemid
 ),
 
--- Microbiology Events (spec, org, ab itemid) with icustay_id as NULL
-microbio_spec_prepared AS (
-    SELECT
-        me.spec_itemid AS itemid,
-        me.subject_id,
-        me.hadm_id,
-        NULL AS icustay_id,
-        me.charttime AS event_timestamp,
-        di.label,
-        di.category,
-        di.linksto
-    FROM
-        `physionet-data.mimiciii_clinical.microbiologyevents` me
-    LEFT JOIN
-        `physionet-data.mimiciii_clinical.d_items` di
-    ON
-        me.spec_itemid = di.itemid
-),
-
-microbio_org_prepared AS (
-    SELECT
-        me.org_itemid AS itemid,
-        me.subject_id,
-        me.hadm_id,
-        NULL AS icustay_id,
-        me.charttime AS event_timestamp,
-        di.label,
-        di.category,
-        di.linksto
-    FROM
-        `physionet-data.mimiciii_clinical.microbiologyevents` me
-    LEFT JOIN
-        `physionet-data.mimiciii_clinical.d_items` di
-    ON
-        me.org_itemid = di.itemid
-),
-
-microbio_ab_prepared AS (
-    SELECT
-        me.ab_itemid AS itemid,
-        me.subject_id,
-        me.hadm_id,
-        NULL AS icustay_id,
-        me.charttime AS event_timestamp,
-        di.label,
-        di.category,
-        di.linksto
-    FROM
-        `physionet-data.mimiciii_clinical.microbiologyevents` me
-    LEFT JOIN
-        `physionet-data.mimiciii_clinical.d_items` di
-    ON
-        me.ab_itemid = di.itemid
-),
-
--- Lab Events (join with d_labitems) with icustay_id as NULL and hardcoded linksto
-labevents_prepared AS (
-    SELECT
-        le.itemid,
-        le.subject_id,
-        le.hadm_id,
-        NULL AS icustay_id,
-        le.charttime AS event_timestamp,
-        dl.label,
-        dl.category,
-        'labevents' AS linksto
-    FROM
-        `physionet-data.mimiciii_clinical.labevents` le
-    LEFT JOIN
-        `physionet-data.mimiciii_clinical.d_labitems` dl
-    ON
-        le.itemid = dl.itemid
-),
-
--- Unified event log
+-- Unified event log (removed microbio_spec, microbio_org, microbio_ab, labevents)
 eventlog AS (
     SELECT * FROM chartevents_prepared
     UNION ALL
@@ -178,14 +104,6 @@ eventlog AS (
     SELECT * FROM outputevents_prepared
     UNION ALL
     SELECT * FROM procedureevents_prepared
-    UNION ALL
-    SELECT * FROM microbio_spec_prepared
-    UNION ALL
-    SELECT * FROM microbio_org_prepared
-    UNION ALL
-    SELECT * FROM microbio_ab_prepared
-    UNION ALL
-    SELECT * FROM labevents_prepared
 ),
 
 -- Apply category mapping
@@ -212,3 +130,4 @@ SELECT *
 FROM eventlog_with_mapped_category
 WHERE label IS NOT NULL
 AND event_timestamp IS NOT NULL
+AND icustay_id IS NOT NULL
