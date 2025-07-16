@@ -1,0 +1,446 @@
+---
+type: about
+tags: [mimic-iii, schema]
+filename: schema
+---
+
+## Table: admissions
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Primary key. Identifies the hospital stay.
+- admittime (timestamp): Time of admission to the hospital.
+- dischtime (timestamp): Time of discharge from the hospital.
+- deathtime (timestamp): Time of death.
+- admission_type (varchar): Type of admission, for example emergency or elective.
+- admission_location (varchar): Admission location.
+- discharge_location (varchar): Discharge location
+- insurance (varchar): Insurance type.
+- language (varchar): Language.
+- religion (varchar): Religon.
+- marital_status (varchar): Marital status.
+- ethnicity (varchar): Ethnicity.
+- edregtime (timestamp): 
+- edouttime (timestamp): 
+- diagnosis (varchar): Diagnosis.
+- hospital_expire_flag (int2): 
+- has_chartevents_data (int2): Hospital admission has at least one observation in the CHARTEVENTS table.
+
+## Table: callout
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- submit_wardid (int4): Identifies the ward where the call out request was submitted.
+- submit_careunit (varchar): If the ward where the call was submitted was an ICU, the ICU type is listed here.
+- curr_wardid (int4): Identifies the ward where the patient is currently residing.
+- curr_careunit (varchar): If the ward where the patient is currently residing is an ICU, the ICU type is listed here.
+- callout_wardid (int4): Identifies the ward where the patient is to be discharged to. A value of 1 indicates the first available ward. A value of 0 indicates home.
+- callout_service (varchar): Identifies the service that the patient is called out to.
+- request_tele (int2): Indicates if special precautions are required.
+- request_resp (int2): Indicates if special precautions are required.
+- request_cdiff (int2): Indicates if special precautions are required.
+- request_mrsa (int2): Indicates if special precautions are required.
+- request_vre (int2): Indicates if special precautions are required.
+- callout_status (varchar): Current status of the call out request.
+- callout_outcome (varchar): The result of the call out request; either a cancellation or a discharge.
+- discharge_wardid (int4): The ward to which the patient was discharged.
+- acknowledge_status (varchar): The status of the response to the call out request.
+- createtime (timestamp): Time at which the call out request was created.
+- updatetime (timestamp): Last time at which the call out request was updated.
+- acknowledgetime (timestamp): Time at which the call out request was acknowledged.
+- outcometime (timestamp): Time at which the outcome (cancelled or discharged) occurred.
+- firstreservationtime (timestamp): First time at which a ward was reserved for the call out request.
+- currentreservationtime (timestamp): Latest time at which a ward was reserved for the call out request.
+
+## Table: caregivers
+- row_id (int4): Unique row identifier.
+- cgid (int4): Unique caregiver identifier.
+- label (varchar): Title of the caregiver, for example MD or RN.
+- description (varchar): More detailed description of the caregiver, if available.
+
+## Table: chartevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- itemid (int4): Foreign key. Identifies the charted item.
+- charttime (timestamp): Time when the event occured.
+- storetime (timestamp): Time when the event was recorded in the system.
+- cgid (int4): Foreign key. Identifies the caregiver.
+- value (varchar): Value of the event as a text string.
+- valuenum (float8): Value of the event as a number.
+- valueuom (varchar): Unit of measurement.
+- warning (int4): Flag to highlight that the value has triggered a warning.
+- error (int4): Flag to highlight an error with the event.
+- resultstatus (varchar): Result status of lab data.
+- stopped (varchar): Text string indicating the stopped status of an event (i.e. stopped, not stopped).
+
+## Table: cptevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- costcenter (varchar): Center recording the code, for example the ICU or the respiratory unit.
+- chartdate (timestamp): Date when the event occured, if available.
+- cpt_cd (varchar): Current Procedural Terminology code.
+- cpt_number (int4): Numerical element of the Current Procedural Terminology code.
+- cpt_suffix (varchar): Text element of the Current Procedural Terminology, if any. Indicates code category.
+- ticket_id_seq (int4): Sequence number of the event, derived from the ticket ID.
+- sectionheader (varchar): High-level section of the Current Procedural Terminology code.
+- subsectionheader (varchar): Subsection of the Current Procedural Terminology code.
+- description (varchar): Description of the Current Procedural Terminology, if available.
+
+## Table: d_cpt
+- row_id (int4): Unique row identifier.
+- category (int2): Code category.
+- sectionrange (varchar): Range of codes within the high-level section.
+- sectionheader (varchar): Section header.
+- subsectionrange (varchar): Range of codes within the subsection.
+- subsectionheader (varchar): Subsection header.
+- codesuffix (varchar): Text element of the Current Procedural Terminology, if any.
+- mincodeinsubsection (int4): Minimum code within the subsection.
+- maxcodeinsubsection (int4): Maximum code within the subsection.
+
+## Table: d_icd_diagnoses
+- row_id (int4): Unique row identifier.
+- icd9_code (varchar): ICD9 code - note that this is a fixed length character field, as whitespaces are important in uniquely identifying ICD-9 codes.
+- short_title (varchar): Short title associated with the code.
+- long_title (varchar): Long title associated with the code.
+
+## Table: d_icd_procedures
+- row_id (int4): Unique row identifier.
+- icd9_code (varchar): ICD9 code - note that this is a fixed length character field, as whitespaces are important in uniquely identifying ICD-9 codes.
+- short_title (varchar): Short title associated with the code.
+- long_title (varchar): Long title associated with the code.
+
+## Table: d_items
+- row_id (int4): Unique row identifier.
+- itemid (int4): Primary key. Identifies the charted item.
+- label (varchar): Label identifying the item.
+- abbreviation (varchar): Abbreviation associated with the item.
+- dbsource (varchar): Source database of the item.
+- linksto (varchar): Table which contains data for the given ITEMID.
+- category (varchar): Category of data which the concept falls under.
+- unitname (varchar): Unit associated with the item.
+- param_type (varchar): Type of item, for example solution or ingredient.
+- conceptid (int4): Identifier used to harmonize concepts identified by multiple ITEMIDs. CONCEPTIDs are planned but not yet implemented (all values are NULL).
+
+## Table: d_labitems
+- row_id (int4): Unique row identifier.
+- itemid (int4): Foreign key. Identifies the charted item.
+- label (varchar): Label identifying the item.
+- fluid (varchar): Fluid associated with the item, for example blood or urine.
+- category (varchar): Category of item, for example chemistry or hematology.
+- loinc_code (varchar): Logical Observation Identifiers Names and Codes (LOINC) mapped to the item, if available.
+
+## Table: datetimeevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- itemid (int4): Foreign key. Identifies the charted item.
+- charttime (timestamp): Time when the event occured.
+- storetime (timestamp): Time when the event was recorded in the system.
+- cgid (int4): Foreign key. Identifies the caregiver.
+- value (timestamp): Value of the event as a text string.
+- valueuom (varchar): Unit of measurement.
+- warning (int2): Flag to highlight that the value has triggered a warning.
+- error (int2): Flag to highlight an error with the event.
+- resultstatus (varchar): Result status of lab data.
+- stopped (varchar): Event was explicitly marked as stopped. Infrequently used by caregivers.
+
+## Table: diagnoses_icd
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- seq_num (int4): Priority of the code. Sequence 1 is the primary code.
+- icd9_code (varchar): ICD9 code for the diagnosis.
+
+## Table: drgcodes
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- drg_type (varchar): Type of Diagnosis-Related Group, for example APR is All Patient Refined
+- drg_code (varchar): Diagnosis-Related Group code
+- description (varchar): Description of the Diagnosis-Related Group
+- drg_severity (int2): Relative severity, available for type APR only.
+- drg_mortality (int2): Relative mortality, available for type APR only.
+
+## Table: icustays
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Primary key. Identifies the ICU stay.
+- dbsource (varchar): Source database of the item.
+- first_careunit (varchar): First careunit associated with the ICU stay.
+- last_careunit (varchar): Last careunit associated with the ICU stay.
+- first_wardid (int2): Identifier for the first ward the patient was located in.
+- last_wardid (int2): Identifier for the last ward the patient is located in.
+- intime (timestamp): Time of admission to the ICU.
+- outtime (timestamp): Time of discharge from the ICU.
+- los (float8): Length of stay in the ICU in fractional days.
+
+## Table: inputevents_cv
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- charttime (timestamp): Time of that the input was started or received.
+- itemid (int4): Foreign key. Identifies the charted item.
+- amount (float8): Amount of the item administered to the patient.
+- amountuom (varchar): Unit of measurement for the amount.
+- rate (float8): Rate at which the item is being administered to the patient.
+- rateuom (varchar): Unit of measurement for the rate.
+- storetime (timestamp): Time when the event was recorded in the system.
+- cgid (int4): Foreign key. Identifies the caregiver.
+- orderid (int4): Identifier linking items which are grouped in a solution.
+- linkorderid (int4): Identifier linking orders across multiple administrations. LINKORDERID is always equal to the first occuring ORDERID of the series.
+- stopped (varchar): Event was explicitly marked as stopped. Infrequently used by caregivers.
+- newbottle (int4): Indicates when a new bottle of the solution was hung at the bedside.
+- originalamount (float8): Amount of the item which was originally charted.
+- originalamountuom (varchar): Unit of measurement for the original amount.
+- originalroute (varchar): Route of administration originally chosen for the item.
+- originalrate (float8): Rate of administration originally chosen for the item.
+- originalrateuom (varchar): Unit of measurement for the rate originally chosen.
+- originalsite (varchar): Anatomical site for the original administration of the item.
+
+## Table: inputevents_mv
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- starttime (timestamp): Time when the event started.
+- endtime (timestamp): Time when the event ended.
+- itemid (int4): Foreign key. Identifies the charted item.
+- amount (float8): Amount of the item administered to the patient.
+- amountuom (varchar): Unit of measurement for the amount.
+- rate (float8): Rate at which the item is being administered to the patient.
+- rateuom (varchar): Unit of measurement for the rate.
+- storetime (timestamp): Time when the event was recorded in the system.
+- cgid (int4): Foreign key. Identifies the caregiver.
+- orderid (int4): Identifier linking items which are grouped in a solution.
+- linkorderid (int4): Identifier linking orders across multiple administrations. LINKORDERID is always equal to the first occuring ORDERID of the series.
+- ordercategoryname (varchar): A group which the item corresponds to.
+- secondaryordercategoryname (varchar): A secondary group for those items with more than one grouping possible.
+- ordercomponenttypedescription (varchar): The role of the item administered in the order.
+- ordercategorydescription (varchar): The type of item administered.
+- patientweight (float8): For drugs dosed by weight, the value of the weight used in the calculation.
+- totalamount (float8): The total amount in the solution for the given item.
+- totalamountuom (varchar): Unit of measurement for the total amount in the solution.
+- isopenbag (int2): Indicates whether the bag containing the solution is open.
+- continueinnextdept (int2): Indicates whether the item will be continued in the next department where the patient is transferred to.
+- cancelreason (int2): Reason for cancellation, if cancelled.
+- statusdescription (varchar): The current status of the order: stopped, rewritten, running or cancelled.
+- comments_editedby (varchar): The title of the caregiver who edited the order.
+- comments_canceledby (varchar): The title of the caregiver who canceled the order.
+- comments_date (timestamp): Time at which the caregiver edited or cancelled the order.
+- originalamount (float8): Amount of the item which was originally charted.
+- originalrate (float8): Rate of administration originally chosen for the item.
+
+## Table: labevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- itemid (int4): Foreign key. Identifies the charted item.
+- charttime (timestamp): Time when the event occured.
+- value (varchar): Value of the event as a text string.
+- valuenum (float8): Value of the event as a number.
+- valueuom (varchar): Unit of measurement.
+- flag (varchar): Flag indicating whether the lab test value is considered abnormal (null if the test was normal).
+
+## Table: microbiologyevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- chartdate (timestamp): Date when the event occured.
+- charttime (timestamp): Time when the event occured, if available.
+- spec_itemid (int4): Foreign key. Identifies the specimen.
+- spec_type_desc (varchar): Description of the specimen.
+- org_itemid (int4): Foreign key. Identifies the organism.
+- org_name (varchar): Name of the organism.
+- isolate_num (int2): Isolate number associated with the test.
+- ab_itemid (int4): Foreign key. Identifies the antibody.
+- ab_name (varchar): Name of the antibody used.
+- dilution_text (varchar): The dilution amount tested for and the comparison which was made against it (e.g. <=4).
+- dilution_comparison (varchar): The comparison component of DILUTION_TEXT: either <= (less than or equal), = (equal), or >= (greater than or equal), or null when not available.
+- dilution_value (float8): The value component of DILUTION_TEXT: must be a floating point number.
+- interpretation (varchar): Interpretation of the test.
+
+## Table: noteevents
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- chartdate (timestamp): Date when the note was charted.
+- charttime (timestamp): Date and time when the note was charted. Note that some notes (e.g. discharge summaries) do not have a time associated with them: these notes have NULL in this column.
+- storetime (timestamp): 
+- category (varchar): Category of the note, e.g. Discharge summary.
+- description (varchar): A more detailed categorization for the note, sometimes entered by free-text.
+- cgid (int4): Foreign key. Identifies the caregiver.
+- iserror (bpchar): Flag to highlight an error with the note.
+- text (text): Content of the note.
+
+## Table: outputevents
+- row_id (int4): 
+- subject_id (int4): 
+- hadm_id (int4): 
+- icustay_id (int4): 
+- charttime (timestamp): 
+- itemid (int4): 
+- value (float8): 
+- valueuom (varchar): 
+- storetime (timestamp): 
+- cgid (int4): 
+- stopped (varchar): 
+- newbottle (bpchar): 
+- iserror (int4): 
+
+## Table: patients
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Primary key. Identifies the patient.
+- gender (varchar): Gender.
+- dob (timestamp): Date of birth.
+- dod (timestamp): Date of death. Null if the patient was alive at least 90 days post hospital discharge.
+- dod_hosp (timestamp): Date of death recorded in the hospital records.
+- dod_ssn (timestamp): Date of death recorded in the social security records.
+- expire_flag (int4): Flag indicating that the patient has died.
+
+## Table: prescriptions
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- startdate (timestamp): Date when the prescription started.
+- enddate (timestamp): Date when the prescription ended.
+- drug_type (varchar): Type of drug.
+- drug (varchar): Name of the drug.
+- drug_name_poe (varchar): Name of the drug on the Provider Order Entry interface.
+- drug_name_generic (varchar): Generic drug name.
+- formulary_drug_cd (varchar): Formulary drug code.
+- gsn (varchar): Generic Sequence Number.
+- ndc (varchar): National Drug Code.
+- prod_strength (varchar): Strength of the drug (product).
+- dose_val_rx (varchar): Dose of the drug prescribed.
+- dose_unit_rx (varchar): Unit of measurement associated with the dose.
+- form_val_disp (varchar): Amount of the formulation dispensed.
+- form_unit_disp (varchar): Unit of measurement associated with the formulation.
+- route (varchar): Route of administration, for example intravenous or oral.
+
+## Table: procedureevents_mv
+- row_id (int4): 
+- subject_id (int4): 
+- hadm_id (int4): 
+- icustay_id (int4): 
+- starttime (timestamp): 
+- endtime (timestamp): 
+- itemid (int4): 
+- value (float8): 
+- valueuom (varchar): 
+- location (varchar): 
+- locationcategory (varchar): 
+- storetime (timestamp): 
+- cgid (int4): 
+- orderid (int4): 
+- linkorderid (int4): 
+- ordercategoryname (varchar): 
+- secondaryordercategoryname (varchar): 
+- ordercategorydescription (varchar): 
+- isopenbag (int2): 
+- continueinnextdept (int2): 
+- cancelreason (int2): 
+- statusdescription (varchar): 
+- comments_editedby (varchar): 
+- comments_canceledby (varchar): 
+- comments_date (timestamp): 
+
+## Table: procedures_icd
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- seq_num (int4): Lower procedure numbers occurred earlier.
+- icd9_code (varchar): ICD9 code associated with the procedure.
+
+## Table: services
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- transfertime (timestamp): Time when the transfer occured.
+- prev_service (varchar): Previous service type.
+- curr_service (varchar): Current service type.
+
+## Table: transfers
+- row_id (int4): Unique row identifier.
+- subject_id (int4): Foreign key. Identifies the patient.
+- hadm_id (int4): Foreign key. Identifies the hospital stay.
+- icustay_id (int4): Foreign key. Identifies the ICU stay.
+- dbsource (varchar): Source database of the item.
+- eventtype (varchar): Type of event, for example admission or transfer.
+- prev_careunit (varchar): Previous careunit.
+- curr_careunit (varchar): Current careunit.
+- prev_wardid (int2): Identifier for the previous ward the patient was located in.
+- curr_wardid (int2): Identifier for the current ward the patient is located in.
+- intime (timestamp): Time when the patient was transferred into the unit.
+- outtime (timestamp): Time when the patient was transferred out of the unit.
+- los (float8): Length of stay in the unit in minutes.
+
+## Foreign Key Relations
+- admissions.subject_id → patients.subject_id
+- callout.hadm_id → admissions.hadm_id
+- callout.subject_id → patients.subject_id
+- chartevents.cgid → caregivers.cgid
+- chartevents.hadm_id → admissions.hadm_id
+- chartevents.icustay_id → icustays.icustay_id
+- chartevents.itemid → d_items.itemid
+- chartevents.subject_id → patients.subject_id
+- cptevents.hadm_id → admissions.hadm_id
+- cptevents.subject_id → patients.subject_id
+- datetimeevents.cgid → caregivers.cgid
+- datetimeevents.hadm_id → admissions.hadm_id
+- datetimeevents.icustay_id → icustays.icustay_id
+- datetimeevents.itemid → d_items.itemid
+- datetimeevents.subject_id → patients.subject_id
+- diagnoses_icd.hadm_id → admissions.hadm_id
+- diagnoses_icd.icd9_code → d_icd_diagnoses.icd9_code
+- diagnoses_icd.subject_id → patients.subject_id
+- drgcodes.hadm_id → admissions.hadm_id
+- drgcodes.subject_id → patients.subject_id
+- icustays.hadm_id → admissions.hadm_id
+- icustays.subject_id → patients.subject_id
+- inputevents_cv.cgid → caregivers.cgid
+- inputevents_cv.hadm_id → admissions.hadm_id
+- inputevents_cv.icustay_id → icustays.icustay_id
+- inputevents_cv.subject_id → patients.subject_id
+- inputevents_mv.cgid → caregivers.cgid
+- inputevents_mv.hadm_id → admissions.hadm_id
+- inputevents_mv.icustay_id → icustays.icustay_id
+- inputevents_mv.itemid → d_items.itemid
+- inputevents_mv.subject_id → patients.subject_id
+- labevents.hadm_id → admissions.hadm_id
+- labevents.itemid → d_labitems.itemid
+- labevents.subject_id → patients.subject_id
+- microbiologyevents.ab_itemid → d_items.itemid
+- microbiologyevents.hadm_id → admissions.hadm_id
+- microbiologyevents.org_itemid → d_items.itemid
+- microbiologyevents.spec_itemid → d_items.itemid
+- microbiologyevents.subject_id → patients.subject_id
+- noteevents.cgid → caregivers.cgid
+- noteevents.hadm_id → admissions.hadm_id
+- noteevents.subject_id → patients.subject_id
+- outputevents.cgid → caregivers.cgid
+- outputevents.hadm_id → admissions.hadm_id
+- outputevents.icustay_id → icustays.icustay_id
+- outputevents.itemid → d_items.itemid
+- outputevents.subject_id → patients.subject_id
+- prescriptions.hadm_id → admissions.hadm_id
+- prescriptions.icustay_id → icustays.icustay_id
+- prescriptions.subject_id → patients.subject_id
+- procedureevents_mv.cgid → caregivers.cgid
+- procedureevents_mv.hadm_id → admissions.hadm_id
+- procedureevents_mv.icustay_id → icustays.icustay_id
+- procedureevents_mv.itemid → d_items.itemid
+- procedureevents_mv.subject_id → patients.subject_id
+- procedures_icd.hadm_id → admissions.hadm_id
+- procedures_icd.icd9_code → d_icd_procedures.icd9_code
+- procedures_icd.subject_id → patients.subject_id
+- services.hadm_id → admissions.hadm_id
+- services.subject_id → patients.subject_id
+- transfers.hadm_id → admissions.hadm_id
+- transfers.icustay_id → icustays.icustay_id
+- transfers.subject_id → patients.subject_id

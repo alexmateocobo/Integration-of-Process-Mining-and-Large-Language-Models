@@ -2,6 +2,7 @@ import logging
 from bigquery_utils import BigQueryUtils
 from process_mining_utils import ProcessMiningUtils
 from langchain_utils import LangChainUtils
+from schema_parser_utils import SchemaParser
 
 if __name__ == "__main__":
     
@@ -43,3 +44,11 @@ if __name__ == "__main__":
     
     print("\n--- Answer from LLM ---\n")
     print(answer)
+
+    # Example usage
+    xml_path = "/Users/alejandromateocobo/Documents/PythonProjects/Integration_Of_LLMs_And_Process_Mining/scripts/filtered_mimic.mimiciii.xml"
+    output_path = "/Users/alejandromateocobo/Documents/PythonProjects/Integration_Of_LLMs_And_Process_Mining/data/context/schema_abstraction.txt"
+
+    parser = SchemaParser(xml_file_path=xml_path, output_path=output_path)
+    parser.parse_schema()
+    parser.write_abstraction_to_file()

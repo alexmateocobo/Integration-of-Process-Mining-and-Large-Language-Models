@@ -1,0 +1,64 @@
+---
+type: about
+tags: [mimic-iii, datatypes]
+filename: datatypes
+---
+
+The following is a list of static data available in the database for SUBJECT_ID in the PATIENTS table:
+
+GENDER
+DOB
+DOD
+DOD_HOSP
+DOD_SSN
+This list contains all the static data available for a single patient. Note that the DOD_SSN (which also contributes to the DOD column) is acquired from the social security death registry, i.e. an external source. It contains dates of death up to 90 days in the future for Metavision patients. It contains dates of death up to 4 years in the future for CareVue patients.
+
+Hospital level data: HADM_ID
+The following tables were sourced from the hospital database, and contain information recorded in the hospital, but not necessarily during the patient's ICU stay:
+
+ADMISSIONS
+CALLOUT
+CPTEVENTS
+DIAGNOSES_ICD
+DRGCODES
+ICUSTAYS
+LABEVENTS
+MICROBIOLOGYEVENTS
+PATIENTS
+PRESCRIPTIONS
+PROCEDURES_ICD
+SERVICES
+TRANSFERS
+The following is a list of static data available in the database for HADM_ID in the ADMISSIONS table. This data is constant for a single hospital admission.
+
+ADMITTIME - The hospital admission time
+DISCHTIME - The hospital discharge time
+DEATHTIME - The date of death of the patient if they died within the hospital
+ADMISSION_TYPE - The type of admission: ELECTIVE, EMERGENCY, NEWBORN or URGENT (note that the NEWBORN value here does not perfectly identify newborns)
+ADMISSION_LOCATION - The location of the patient prior to hospital admission
+DISCHARGE_LOCATION - The location of the patient after hospital discharge
+INSURANCE - The patient's type of medical insurance
+LANGUAGE - The patient's primary language
+RELIGION - The patient's stated religion
+MARITAL_STATUS - The patient's marital status
+ETHNICITY - The patient's stated ethnicity
+DIAGNOSIS - A short description of the reason for the patient's admission
+ICU level data: ICUSTAY_ID
+The following tables were sourced from the ICU databases, and contain information only during a patient's ICU stay:
+
+DATETIMEEVENTS
+INPUTEVENTS_CV
+INPUTEVENTS_MV
+NOTEEVENTS
+OUTPUTEVENTS
+PROCEDUREEVENTS_MV
+The following is a list of static data available in the database for ICUSTAY_ID in the ICUSTAYS table:
+
+DBSOURCE - The ICU database from which the patient exists in
+FIRST_CAREUNIT - The first unit that cared for the patient (all ICUs except NWARD)
+LAST_CAREUNIT - The last care unit that cared for the patient (all ICUs except NWARD)
+FIRST_WARDID - An integer representing the first physical location of the patient
+LAST_WARDID - An integer representing the last physical location of the patient
+INTIME - Time entered the ICU
+OUTTIME - Time left the ICU
+LOS - The patient's ICU length of stay
